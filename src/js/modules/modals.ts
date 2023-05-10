@@ -15,12 +15,25 @@ export default function modals() {
     const modal = document.querySelector<HTMLElement>(modalSelector)!;
     const close = document.querySelector<HTMLElement>(closeSelector)!;
     const triggers = document.querySelectorAll<HTMLElement>(modalTriggers);
+    const scroll = calcScroll();
+
+    function calcScroll() {
+      let div = document.createElement("div");
+      div.classList.add("for-div-scroll");
+      document.body.appendChild(div);
+
+      let scrollWidth = div.offsetWidth - div.clientWidth;
+      div.remove();
+
+      return scrollWidth;
+    }
 
     const closeAllModals = () => {
       document
         .querySelectorAll<HTMLElement>("[data-modal]")
         .forEach((modalWindow: HTMLElement) => {
           modalWindow.style.display = "none";
+          document.body.style.marginRight = `0px`;
         });
     };
 
@@ -28,6 +41,7 @@ export default function modals() {
       modal.style.display = "block";
       close.focus();
       document.body.style.overflow = "hidden";
+      document.body.style.marginRight = `${scroll}px`;
     };
 
     const closeModal = () => {
@@ -80,5 +94,5 @@ export default function modals() {
     closeSelector: ".popup-consultation .popup-close",
   });
 
-  showModalByTime(".popup-consultation", 5000);
+  showModalByTime(".popup-consultation", 60000);
 }
