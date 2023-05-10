@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite",
     "serve": "vite",
-    "build": "vite build"
+    "dev": "vite",
+    "build": "tsc && vite build"
   },
   "author": "",
   "license": "ISC",
@@ -15,6 +16,7 @@
     "not dead"
   ],
   "devDependencies": {
+    "typescript": "^5.0.4",
     "vite": "^4.2.1"
   }
 }
