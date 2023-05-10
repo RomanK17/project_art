@@ -2,19 +2,19 @@ export default function modals() {
   let modalTimer: number;
 
   const bindModal = ({
-    modalTrigger,
+    modalTriggers,
     modalSelector,
     closeSelector,
     closeClickOverlay = true,
   }: {
-    modalTrigger: string;
+    modalTriggers: string;
     modalSelector: string;
     closeSelector: string;
     closeClickOverlay?: boolean;
   }) => {
     const modal = document.querySelector<HTMLElement>(modalSelector)!;
     const close = document.querySelector<HTMLElement>(closeSelector)!;
-    const triggers = document.querySelectorAll<HTMLElement>(modalTrigger);
+    const triggers = document.querySelectorAll<HTMLElement>(modalTriggers);
 
     const closeAllModals = () => {
       document
@@ -69,10 +69,16 @@ export default function modals() {
   };
 
   bindModal({
-    modalTrigger: ".button-design",
+    modalTriggers: ".button-design",
     modalSelector: ".popup-design",
     closeSelector: ".popup-design .popup-close",
   });
 
-  showModalByTime(".popup", 60000);
+  bindModal({
+    modalTriggers: ".button-consultation",
+    modalSelector: ".popup-consultation",
+    closeSelector: ".popup-consultation .popup-close",
+  });
+
+  showModalByTime(".popup-consultation", 5000);
 }
