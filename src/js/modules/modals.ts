@@ -15,6 +15,7 @@ export default function modals() {
     const close = document.querySelector<HTMLElement>(closeSelector)!;
     const triggers = document.querySelectorAll<HTMLElement>(modalTriggers);
     const scroll = calcScroll();
+    const gift = document.querySelector<HTMLElement>(".fixed-gift")!;
 
     function calcScroll() {
       let div = document.createElement("div");
@@ -33,6 +34,7 @@ export default function modals() {
         .forEach((modalWindow: HTMLElement) => {
           modalWindow.style.display = "none";
           document.body.style.marginRight = `0px`;
+          gift.style.marginRight = `0px`;
         });
     };
 
@@ -41,6 +43,7 @@ export default function modals() {
       close.focus();
       document.body.style.overflow = "hidden";
       document.body.style.marginRight = `${scroll}px`;
+      gift.style.marginRight = `${scroll}px`;
     };
 
     const closeModal = () => {
