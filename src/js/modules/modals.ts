@@ -5,12 +5,10 @@ export default function modals() {
     modalTriggers,
     modalSelector,
     closeSelector,
-    closeClickOverlay = true,
   }: {
     modalTriggers: string;
     modalSelector: string;
     closeSelector: string;
-    closeClickOverlay?: boolean;
   }) => {
     const modal = document.querySelector<HTMLElement>(modalSelector)!;
     const close = document.querySelector<HTMLElement>(closeSelector)!;
@@ -53,9 +51,9 @@ export default function modals() {
 
     triggers.forEach((trigger) => {
       trigger.addEventListener("click", (event) => {
-        if (event.target) {
-          event.preventDefault();
-        }
+        const target = event.target as HTMLElement;
+        if (target) event.preventDefault();
+        if (target.classList.contains("fixed-gift")) target.remove();
         showModal();
         clearTimeout(modalTimer);
       });
@@ -64,7 +62,7 @@ export default function modals() {
     close.addEventListener("click", () => closeModal());
 
     modal.addEventListener("click", (event) => {
-      if (event.target === modal && closeClickOverlay) {
+      if (event.target === modal) {
         closeModal();
       }
     });
@@ -92,6 +90,12 @@ export default function modals() {
     modalTriggers: ".button-consultation",
     modalSelector: ".popup-consultation",
     closeSelector: ".popup-consultation .popup-close",
+  });
+
+  bindModal({
+    modalTriggers: ".fixed-gift",
+    modalSelector: ".popup-gift",
+    closeSelector: ".popup-gift .popup-close",
   });
 
   showModalByTime(".popup-consultation", 60000);
