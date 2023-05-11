@@ -47,12 +47,17 @@ export default function modals() {
       modal.style.display = "none";
       closeAllModals();
       document.body.style.overflow = "visible";
-      (document.activeElement as HTMLElement).focus();
+      const activeModal = document.activeElement as HTMLElement | null;
+      if (activeModal) activeModal.focus();
     };
 
     triggers.forEach((trigger) => {
       trigger.addEventListener("click", (event) => {
-        const target = event.target as HTMLElement;
+        const target: HTMLElement | null =
+          event.target instanceof HTMLElement ? event.target : null;
+        if (target === null) {
+          return null;
+        }
         if (target) event.preventDefault();
         if (target.classList.contains("fixed-gift")) target.remove();
         showModal();
@@ -88,7 +93,10 @@ export default function modals() {
 
   const showModalByTime = (selector: string, time: number) => {
     modalTimer = setTimeout(() => {
-      (document.querySelector(selector) as HTMLElement).style.display = "block";
+      const element = document.querySelector<HTMLElement>(selector);
+      if (element) {
+        element.style.display = "block";
+      }
       document.body.style.overflow = "hidden";
     }, time);
   };
