@@ -1,5 +1,6 @@
 export default function modals() {
   let modalTimer: number;
+  let btnPressed: boolean = false;
 
   const bindModal = ({
     modalTriggers,
@@ -53,9 +54,10 @@ export default function modals() {
 
     triggers.forEach((trigger) => {
       trigger.addEventListener("click", (event) => {
-        if (event.target) {
-          event.preventDefault();
-        }
+        const target = event.target as HTMLElement;
+        btnPressed = true;
+        if (target) event.preventDefault();
+        if (target.classList.contains("fixed-gift")) target.remove();
         showModal();
         clearTimeout(modalTimer);
       });
@@ -73,6 +75,18 @@ export default function modals() {
       if (event.code === "Escape" && modal.style.display === "block")
         closeModal();
     });
+
+    const openByScroll = (selector: string) => {
+      window.addEventListener("scroll", () => {
+        if (
+          !btnPressed &&
+          window.innerHeight + window.pageYOffset >= document.body.offsetHeight
+        )
+          document.body.querySelector<HTMLElement>(selector)!.click();
+      });
+    };
+
+    openByScroll(".fixed-gift");
   };
 
   const showModalByTime = (selector: string, time: number) => {
