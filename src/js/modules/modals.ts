@@ -1,5 +1,6 @@
 export default function modals() {
   let modalTimer: number;
+  let btnPressed: boolean = false;
 
   const bindModal = ({
     modalTriggers,
@@ -14,6 +15,7 @@ export default function modals() {
     const close = document.querySelector<HTMLElement>(closeSelector)!;
     const triggers = document.querySelectorAll<HTMLElement>(modalTriggers);
     const scroll = calcScroll();
+    const gift = document.querySelector<HTMLElement>(".fixed-gift")!;
 
     function calcScroll() {
       let div = document.createElement("div");
@@ -32,6 +34,7 @@ export default function modals() {
         .forEach((modalWindow: HTMLElement) => {
           modalWindow.style.display = "none";
           document.body.style.marginRight = `0px`;
+          gift.style.marginRight = `0px`;
         });
     };
 
@@ -40,18 +43,24 @@ export default function modals() {
       close.focus();
       document.body.style.overflow = "hidden";
       document.body.style.marginRight = `${scroll}px`;
+      gift.style.marginRight = `${scroll}px`;
     };
 
     const closeModal = () => {
       modal.style.display = "none";
       closeAllModals();
       document.body.style.overflow = "visible";
-      (document.activeElement as HTMLElement).focus();
+      const activeModal = document.activeElement as HTMLElement | null;
+      if (activeModal) activeModal.focus();
     };
 
     triggers.forEach((trigger) => {
       trigger.addEventListener("click", (event) => {
-        const target = event.target as HTMLElement;
+        const target: HTMLElement | null =
+          event.target instanceof HTMLElement ? event.target : null;
+        if (target === null) {
+          return null;
+        }
         if (target) event.preventDefault();
         if (target.classList.contains("fixed-gift")) target.remove();
         showModal();
@@ -71,11 +80,26 @@ export default function modals() {
       if (event.code === "Escape" && modal.style.display === "block")
         closeModal();
     });
+
+    const openByScroll = (selector: string) => {
+      window.addEventListener("scroll", () => {
+        if (
+          !btnPressed &&
+          window.innerHeight + window.pageYOffset >= document.body.offsetHeight
+        )
+          document.body.querySelector<HTMLElement>(selector)!.click();
+      });
+    };
+
+    openByScroll(".fixed-gift");
   };
 
   const showModalByTime = (selector: string, time: number) => {
     modalTimer = setTimeout(() => {
-      (document.querySelector(selector) as HTMLElement).style.display = "block";
+      const element = document.querySelector<HTMLElement>(selector);
+      if (element) {
+        element.style.display = "block";
+      }
       document.body.style.overflow = "hidden";
     }, time);
   };
