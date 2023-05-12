@@ -9,7 +9,7 @@ const sliders = ({
   prevSlideBtn: string;
   nextSlideBtn: string;
 }) => {
-  let pause: boolean = false;
+  let pause: number = 0;
   let slideIndex: number = 1;
   const sliderImages = document.querySelectorAll(slides);
 
@@ -71,11 +71,13 @@ const sliders = ({
 
   activateAnimation();
 
-  sliderImages[0].parentNode.addEventListener("mouseenter", () => {
+  const ParentSliderElement = sliderImages[0].parentNode as HTMLElement;
+
+  ParentSliderElement.addEventListener("mouseenter", () => {
     clearInterval(pause);
   });
 
-  sliderImages[0].parentNode.addEventListener("mouseleave", () => {
+  ParentSliderElement.addEventListener("mouseleave", () => {
     activateAnimation();
   });
 };
