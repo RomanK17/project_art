@@ -31,27 +31,21 @@ const sliders = ({
     showSlide((slideIndex += direction));
   };
 
-  try {
+  if (prevSlideBtn && nextSlideBtn) {
     const prevBtn = document.querySelector(prevSlideBtn);
     const nextBtn = document.querySelector(nextSlideBtn);
 
-    if (prevBtn) {
-      prevBtn.addEventListener("click", () => {
-        changeSlide(-1);
-        sliderImages[slideIndex - 1].classList.remove("slideInRight");
-        sliderImages[slideIndex - 1].classList.add("slideInLeft");
-      });
-    }
+    prevBtn?.addEventListener("click", () => {
+      changeSlide(-1);
+      sliderImages[slideIndex - 1].classList.remove("slideInRight");
+      sliderImages[slideIndex - 1].classList.add("slideInLeft");
+    });
 
-    if (nextBtn) {
-      nextBtn.addEventListener("click", () => {
-        changeSlide(1);
-        sliderImages[slideIndex - 1].classList.remove("slideInLeft");
-        sliderImages[slideIndex - 1].classList.add("slideInRight");
-      });
-    }
-  } catch (error) {
-    console.log("ошибка при переключении слайдов");
+    nextBtn?.addEventListener("click", () => {
+      changeSlide(1);
+      sliderImages[slideIndex - 1].classList.remove("slideInLeft");
+      sliderImages[slideIndex - 1].classList.add("slideInRight");
+    });
   }
 
   const activateAnimation = () => {
