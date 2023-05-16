@@ -1,28 +1,19 @@
-// import checkNumInputs from "../modules/checkNumInputs";
-
 const createForms = () => {
   const forms = document.querySelectorAll("form");
   const inputs = document.querySelectorAll("input");
-  const uploadInputs = document.querySelectorAll('[name="upload"]');
+  const uploadImageInputs =
+    document.querySelectorAll<HTMLInputElement>('[name="upload"]');
 
   const messageForUser = {
     loading: "Отправка данных...",
     success: "Спасибо! С вами скоро свяжутся",
     error: "Ошибка!",
-    imgSpinner: "src/assets/img/spinner.gif", //картинки не подгружаются
+    imgSpinner: "src/assets/img/spinner.gif",
     imgOk: "src/assets/img/ok.png",
     imgFail: "src/assets/img/fail.png",
   };
-  // можно убрать, тк сервер деплою на render
-  const paths = {
-    designer: "../../assets/server.php",
-    question: "../../assets/question.php",
-  };
 
-  // only nmbrs in this input
-  //   checkNumInputs('[name="user_phone"]');
-
-  const postData = async (url, data) => {
+  const postData = async (url: string, data: {}) => {
     let result = await fetch(url, {
       method: "POST",
       body: JSON.stringify(data),
@@ -35,7 +26,7 @@ const createForms = () => {
 
   const clearInputs = () => {
     inputs.forEach((input) => (input.value = ""));
-    uploadInputs.forEach((uploadInput) => {
+    uploadImageInputs.forEach((uploadInput) => {
       const prevSibling = uploadInput.previousElementSibling;
       if (prevSibling !== null) {
         prevSibling.textContent = "Файл не выбран";
@@ -43,19 +34,22 @@ const createForms = () => {
     });
   };
 
-  uploadInputs.forEach((uploadInput) => {
+  uploadImageInputs.forEach((uploadInput: HTMLInputElement) => {
     uploadInput.addEventListener("input", () => {
-      const imgFullName = uploadInput.files[0].name.split(".");
-      let truncatedName = imgFullName[0].substring(0, 6);
+      if (uploadInput.files) {
+        const imgFullName = uploadInput.files[0].name.split(".");
+        let truncatedName = imgFullName[0].substring(0, 6);
 
-      if (truncatedName.length === 6) {
-        truncatedName += "..";
-      }
+        if (truncatedName.length === 6) {
+          truncatedName += "..";
+        }
 
-      imgFullName[0] = `${truncatedName}.${imgFullName.pop()}`;
+        imgFullName[0] = `${truncatedName}.${imgFullName.pop()}`;
 
-      if (uploadInput && uploadInput.previousElementSibling) {
-        uploadInput.previousElementSibling.textContent = imgFullName;
+        if (uploadInput && uploadInput.previousElementSibling) {
+          uploadInput.previousElementSibling.textContent =
+            imgFullName.join(".");
+        }
       }
     });
   });
@@ -66,7 +60,7 @@ const createForms = () => {
 
       let messageDiv = document.createElement("div");
       messageDiv.classList.add("status");
-      form.parentNode.appendChild(messageDiv);
+      if (form.parentNode) form.parentNode.appendChild(messageDiv);
       form.classList.add("animated", "fadeOutUp");
       setTimeout(() => {
         form.style.display = "none";
@@ -83,20 +77,13 @@ const createForms = () => {
 
       const formData = new FormData(form);
 
-      let api;
-      form.closest(".popup-design") || form.classList.contains("img_form")
-        ? (api = paths.designer)
-        : (api = paths.question);
-
       let formDataObject = Object.fromEntries(formData.entries());
 
       postData(
-        "https://server-project-art.onrender.com/api/data", // поменять ссылку на свой сервер(или вставить переменную api)
-
+        "https://server-project-art.onrender.com/api/data",
         formDataObject
       )
-        .then((result) => {
-          console.log(result);
+        .then(() => {
           statusImg.setAttribute("src", messageForUser.imgOk);
           textMessage.textContent = messageForUser.success;
         })
