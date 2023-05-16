@@ -1,5 +1,6 @@
 import modals from "./modules/modals";
 import sliders from "./modules/sliders";
+import createForms from "./modules/forms";
 
 window.addEventListener("DOMContentLoaded", () => {
   modals();
@@ -17,4 +18,6 @@ window.addEventListener("DOMContentLoaded", () => {
     prevSlideBtn: "",
     nextSlideBtn: "",
   });
+
+  createForms();
 });
