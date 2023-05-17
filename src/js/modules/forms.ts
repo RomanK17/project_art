@@ -8,9 +8,9 @@ const createForms = () => {
     loading: "Отправка данных...",
     success: "Спасибо! С вами скоро свяжутся",
     error: "Ошибка!",
-    imgSpinner: "./src/assets/img/spinner.gif",
-    imgOk: "./src/assets/img/ok.png",
-    imgFail: "./src/assets/img/fail.png",
+    imgSpinner: document.querySelector<HTMLInputElement>(".img_spinner")!, //костыль, нужно исправить
+    imgOk: document.querySelector<HTMLInputElement>(".img-ok")!,
+    imgFail: document.querySelector<HTMLInputElement>(".img-fail")!,
   };
 
   const postData = async (url: string, data: {}) => {
@@ -66,10 +66,15 @@ const createForms = () => {
         form.style.display = "none";
       }, 400);
 
-      const statusImg = document.createElement("img");
-      statusImg.setAttribute("src", messageForUser.imgSpinner);
-      statusImg.classList.add("animated", "fadeIntUp");
-      messageDiv.append(statusImg);
+      console.log(messageForUser.imgSpinner);
+      if (messageForUser.imgSpinner) {
+        messageForUser.imgSpinner.style.display = "inline";
+        messageDiv.append(
+          messageForUser.imgSpinner,
+          messageForUser.imgOk,
+          messageForUser.imgFail
+        );
+      }
 
       const textMessage = document.createElement("div");
       textMessage.textContent = messageForUser.loading;
@@ -84,11 +89,15 @@ const createForms = () => {
         formDataObject
       )
         .then(() => {
-          statusImg.setAttribute("src", messageForUser.imgOk);
+          messageForUser.imgSpinner.style.display = "none";
+          if (messageForUser.imgOk)
+            messageForUser.imgOk.style.display = "inline";
           textMessage.textContent = messageForUser.success;
         })
         .catch(() => {
-          statusImg.setAttribute("src", messageForUser.imgFail);
+          messageForUser.imgSpinner.style.display = "none";
+          if (messageForUser.imgFail)
+            messageForUser.imgFail.style.display = "inline";
           textMessage.textContent = messageForUser.error;
         })
         .finally(() => {
