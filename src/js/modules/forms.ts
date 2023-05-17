@@ -8,13 +8,13 @@ const createForms = () => {
     loading: "Отправка данных...",
     success: "Спасибо! С вами скоро свяжутся",
     error: "Ошибка!",
-    imgSpinner: "src/assets/img/spinner.gif",
-    imgOk: "src/assets/img/ok.png",
-    imgFail: "src/assets/img/fail.png",
+    imgSpinner: "./src/assets/img/spinner.gif",
+    imgOk: "./src/assets/img/ok.png",
+    imgFail: "./src/assets/img/fail.png",
   };
 
   const postData = async (url: string, data: {}) => {
-    let result = await fetch(url, {
+    const result = await fetch(url, {
       method: "POST",
       body: JSON.stringify(data),
       headers: {
@@ -58,7 +58,7 @@ const createForms = () => {
     form.addEventListener("submit", (event) => {
       event.preventDefault();
 
-      let messageDiv = document.createElement("div");
+      const messageDiv = document.createElement("div");
       messageDiv.classList.add("status");
       if (form.parentNode) form.parentNode.appendChild(messageDiv);
       form.classList.add("animated", "fadeOutUp");
@@ -66,18 +66,18 @@ const createForms = () => {
         form.style.display = "none";
       }, 400);
 
-      let statusImg = document.createElement("img");
+      const statusImg = document.createElement("img");
       statusImg.setAttribute("src", messageForUser.imgSpinner);
       statusImg.classList.add("animated", "fadeIntUp");
       messageDiv.append(statusImg);
 
-      let textMessage = document.createElement("div");
+      const textMessage = document.createElement("div");
       textMessage.textContent = messageForUser.loading;
       messageDiv.append(textMessage);
 
       const formData = new FormData(form);
 
-      let formDataObject = Object.fromEntries(formData.entries());
+      const formDataObject = Object.fromEntries(formData.entries());
 
       postData(
         "https://server-project-art.onrender.com/api/data",
