@@ -1,4 +1,4 @@
-const createForms = () => {
+const createForms = (): void => {
   const forms = document.querySelectorAll("form");
   const inputs = document.querySelectorAll("input");
   const uploadImageInputs =
@@ -8,23 +8,22 @@ const createForms = () => {
     loading: "Отправка данных...",
     success: "Спасибо! С вами скоро свяжутся",
     error: "Ошибка!",
-    imgSpinner: document.querySelector<HTMLInputElement>(".img_spinner")!, //костыль, нужно исправить
-    imgOk: document.querySelector<HTMLInputElement>(".img-ok")!,
-    imgFail: document.querySelector<HTMLInputElement>(".img-fail")!,
+    imgSpinner: document.querySelector<HTMLImageElement>(".img_spinner"),
+    imgOk: document.querySelector<HTMLImageElement>(".img-ok"),
+    imgFail: document.querySelector<HTMLImageElement>(".img-fail"),
   };
 
-  const postData = async (url: string, data: {}) => {
-    const result = await fetch(url, {
+  const postData = async (url: string, data: {}): Promise<void> => {
+    await fetch(url, {
       method: "POST",
       body: JSON.stringify(data),
       headers: {
         "Content-Type": "application/json",
       },
     });
-    return await result.text();
   };
 
-  const clearInputs = () => {
+  const clearInputs = (): void => {
     inputs.forEach((input) => (input.value = ""));
     uploadImageInputs.forEach((uploadInput) => {
       const prevSibling = uploadInput.previousElementSibling;
@@ -34,8 +33,8 @@ const createForms = () => {
     });
   };
 
-  uploadImageInputs.forEach((uploadInput: HTMLInputElement) => {
-    uploadInput.addEventListener("input", () => {
+  uploadImageInputs.forEach((uploadInput: HTMLInputElement): void => {
+    uploadInput.addEventListener("input", (): void => {
       if (uploadInput.files) {
         const imgFullName = uploadInput.files[0].name.split(".");
         let truncatedName = imgFullName[0].substring(0, 6);
@@ -54,7 +53,7 @@ const createForms = () => {
     });
   });
 
-  forms.forEach((form) => {
+  forms.forEach((form): void => {
     form.addEventListener("submit", (event) => {
       event.preventDefault();
 
@@ -69,11 +68,17 @@ const createForms = () => {
       console.log(messageForUser.imgSpinner);
       if (messageForUser.imgSpinner) {
         messageForUser.imgSpinner.style.display = "inline";
-        messageDiv.append(
-          messageForUser.imgSpinner,
-          messageForUser.imgOk,
+        if (
+          messageForUser.imgSpinner &&
+          messageForUser.imgOk &&
           messageForUser.imgFail
-        );
+        ) {
+          messageDiv.append(
+            messageForUser.imgSpinner,
+            messageForUser.imgOk,
+            messageForUser.imgFail
+          );
+        }
       }
 
       const textMessage = document.createElement("div");
@@ -89,13 +94,15 @@ const createForms = () => {
         formDataObject
       )
         .then(() => {
-          messageForUser.imgSpinner.style.display = "none";
+          if (messageForUser.imgSpinner)
+            messageForUser.imgSpinner.style.display = "none";
           if (messageForUser.imgOk)
             messageForUser.imgOk.style.display = "inline";
           textMessage.textContent = messageForUser.success;
         })
         .catch(() => {
-          messageForUser.imgSpinner.style.display = "none";
+          if (messageForUser.imgSpinner)
+            messageForUser.imgSpinner.style.display = "none";
           if (messageForUser.imgFail)
             messageForUser.imgFail.style.display = "inline";
           textMessage.textContent = messageForUser.error;
