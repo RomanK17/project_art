@@ -65,7 +65,6 @@ const createForms = (): void => {
         form.style.display = "none";
       }, 400);
 
-      console.log(messageForUser.imgSpinner);
       if (messageForUser.imgSpinner) {
         messageForUser.imgSpinner.style.display = "inline";
         if (

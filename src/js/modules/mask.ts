@@ -1,5 +1,5 @@
 const createMaskInputs = (selector: string): void => {
-  let setCursorPosition = (
+  const setCursorPosition = (
     position: number,
     element: HTMLInputElement
   ): void => {
@@ -9,9 +9,9 @@ const createMaskInputs = (selector: string): void => {
   };
 
   function createPhoneMask(this: HTMLInputElement, event: Event): void {
-    let matrix = "+7 (___) ___ __ __";
+    const matrix = "+7 (___) ___ __ __";
     let i = 0;
-    let def = matrix.replace(/\D/g, ""); //версия matrix, содержащая только цифру 7
+    const def = matrix.replace(/\D/g, ""); //версия matrix, содержащая только цифру 7
     let inputValue = this.value.replace(/\D/g, ""); //содержит введенные в поле цифры (такой формат: 732132131232), при этом 7 можно удалить. Отсюда берем цифры для замены на пустые строки("")
 
     if (def.length >= inputValue.length) {

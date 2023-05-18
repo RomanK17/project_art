@@ -2,6 +2,7 @@ import modals from "./modules/modals";
 import sliders from "./modules/sliders";
 import createForms from "./modules/forms";
 import createMaskInputs from "./modules/mask";
+import checkTextInputs from "./modules/checkTextInputs";
 
 window.addEventListener("DOMContentLoaded", () => {
   modals();
@@ -23,4 +24,7 @@ window.addEventListener("DOMContentLoaded", () => {
   createForms();
 
   createMaskInputs('[name = "phone"]');
+
+  checkTextInputs('[name="name"]');
+  checkTextInputs('[name="message"]');
 });
