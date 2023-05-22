@@ -3,6 +3,7 @@ import sliders from "./modules/sliders";
 import createForms from "./modules/forms";
 import createMaskInputs from "./modules/mask";
 import checkTextInputs from "./modules/checkTextInputs";
+import showMoreCards from "./modules/showMoreCards";
 
 window.addEventListener("DOMContentLoaded", () => {
   modals();
@@ -27,4 +28,6 @@ window.addEventListener("DOMContentLoaded", () => {
 
   checkTextInputs('[name="name"]');
   checkTextInputs('[name="message"]');
+
+  showMoreCards(".button-styles", ".styles-2");
 });
