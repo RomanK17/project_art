@@ -6,7 +6,6 @@
   "scripts": {
     "dev": "vite",
     "serve": "vite",
-    "dev": "vite",
     "build": "tsc && vite build"
   },
   "author": "",
@@ -18,5 +17,8 @@
   "devDependencies": {
     "typescript": "^5.0.4",
     "vite": "^4.2.1"
+  },
+  "dependencies": {
+    "json-server": "^0.17.3"
   }
 }
