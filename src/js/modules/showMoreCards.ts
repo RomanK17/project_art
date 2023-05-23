@@ -5,15 +5,20 @@ const showMoreCards = (triggerButtonSelector: string, wrapper: string) => {
     triggerButtonSelector
   );
   if (triggerButton !== null) {
+    const parent = document.querySelector(wrapper);
+
     triggerButton.addEventListener("click", function () {
       getCards("http://localhost:3000/styles")
-        .then((result) => createCards(result))
+        .then((result) => {
+          createCards(result);
+          console.log(result);
+        })
         .catch((error) => console.log(error)); // доабвить инфу для пользователя при ошибке
 
       this.remove();
     });
 
-    function createCards(response) {
+    function createCards(response: any[]) {
       response.forEach((item) => {
         const card = document.createElement("div");
         card.classList.add(
@@ -32,7 +37,7 @@ const showMoreCards = (triggerButtonSelector: string, wrapper: string) => {
           <a href="${item.link}">Подробнее</a>
         </div>`;
 
-        document.querySelector(wrapper).append(card);
+        parent?.append(card);
       });
     }
   }
