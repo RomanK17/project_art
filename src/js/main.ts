@@ -3,6 +3,7 @@ import sliders from "./modules/sliders";
 import createForms from "./modules/forms";
 import createMaskInputs from "./modules/mask";
 import checkTextInputs from "./modules/checkTextInputs";
+import createCalc from "./modules/createCalc";
 
 window.addEventListener("DOMContentLoaded", () => {
   modals();
@@ -27,4 +28,12 @@ window.addEventListener("DOMContentLoaded", () => {
 
   checkTextInputs('[name="name"]');
   checkTextInputs('[name="message"]');
+
+  createCalc({
+    sizeSelector: "#size",
+    materialsSelector: "#material",
+    optionsSelector: "#options",
+    promocodeSelector: ".promocode",
+    resultSelector: ".calc-price",
+  });
 });
