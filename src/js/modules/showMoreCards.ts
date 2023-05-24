@@ -6,13 +6,19 @@ const showMoreCards = (triggerButtonSelector: string, wrapper: string) => {
   );
   if (triggerButton !== null) {
     const parent = document.querySelector(wrapper);
+    const errorMessage = document.createElement("div");
+    errorMessage.innerHTML = "Ошибка. Повторите попытку позже.";
 
     triggerButton.addEventListener("click", function () {
       getCards("/db.json")
-        .then((result) => createCards(result.styles))
-        .catch((error) => console.log(error)); // доабвить инфу для пользователя при ошибке
-
-      this.remove();
+        .then((result) => {
+          createCards(result.styles);
+          this.remove();
+        })
+        .catch((error) => {
+          triggerButton.append(errorMessage);
+          console.log(error);
+        });
     });
 
     function createCards(response: []) {
