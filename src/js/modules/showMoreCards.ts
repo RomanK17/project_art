@@ -8,7 +8,7 @@ const showMoreCards = (triggerButtonSelector: string, wrapper: string) => {
     const parent = document.querySelector(wrapper);
 
     triggerButton.addEventListener("click", function () {
-      getCards("src/assets/db.json")
+      getCards("/db.json")
         .then((result) => createCards(result.styles))
         .catch((error) => console.log(error)); // доабвить инфу для пользователя при ошибке
 
