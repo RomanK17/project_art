@@ -8,11 +8,8 @@ const showMoreCards = (triggerButtonSelector: string, wrapper: string) => {
     const parent = document.querySelector(wrapper);
 
     triggerButton.addEventListener("click", function () {
-      getCards("http://localhost:3000/styles")
-        .then((result) => {
-          createCards(result);
-          console.log(result);
-        })
+      getCards("src/assets/db.json")
+        .then((result) => createCards(result.styles))
         .catch((error) => console.log(error)); // доабвить инфу для пользователя при ошибке
 
       this.remove();
