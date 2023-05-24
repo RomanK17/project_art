@@ -4,6 +4,7 @@ import createForms from "./modules/forms";
 import createMaskInputs from "./modules/mask";
 import checkTextInputs from "./modules/checkTextInputs";
 import showMoreCards from "./modules/showMoreCards";
+import createCalc from "./modules/createCalc";
 
 window.addEventListener("DOMContentLoaded", () => {
   modals();
@@ -30,4 +31,12 @@ window.addEventListener("DOMContentLoaded", () => {
   checkTextInputs('[name="message"]');
 
   showMoreCards(".button-styles", "#styles .row");
+
+  createCalc({
+    sizeSelector: "#size",
+    materialsSelector: "#material",
+    optionsSelector: "#options",
+    promocodeSelector: ".promocode",
+    resultSelector: ".calc-price",
+  });
 });
