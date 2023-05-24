@@ -18,8 +18,8 @@ const showMoreCards = (triggerButtonSelector: string, wrapper: string) => {
       this.remove();
     });
 
-    function createCards(response: any[]) {
-      response.forEach((item) => {
+    function createCards(response: []) {
+      response.forEach(({ src, title, link }) => {
         const card = document.createElement("div");
         card.classList.add(
           "animated",
@@ -32,9 +32,9 @@ const showMoreCards = (triggerButtonSelector: string, wrapper: string) => {
 
         card.innerHTML = `  
         <div class=styles-block>
-          <img src=${item.src} alt='пример работы'>
-          <h4>${item.title}</h4>
-          <a href="${item.link}">Подробнее</a>
+          <img src=${src} alt='пример работы'>
+          <h4>${title}</h4>
+          <a href="${link}">Подробнее</a>
         </div>`;
 
         parent?.append(card);

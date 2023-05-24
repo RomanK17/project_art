@@ -9,7 +9,7 @@ const postData = async (url: string, data: {}): Promise<void> => {
 };
 
 const getCards = async (url: string) => {
-  let result = await fetch(url);
+  const result = await fetch(url);
 
   if (!result.ok)
     throw new Error(`could not fetch ${url}, status: ${result.status}`); //result.status - возвращает номер ошибки
