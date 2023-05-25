@@ -1,27 +1,35 @@
 const replaceWithImageOnHover = (boxesSelector: string) => {
-  //sizes-block
   const boxes = document.querySelectorAll(boxesSelector);
 
-  function showImg(img: HTMLImageElement, paragraphs: NodeListOf<Element>) {
+  function showImg(
+    img: HTMLImageElement,
+    paragraphs: NodeListOf<HTMLParagraphElement>
+  ) {
     img.src = img.src.slice(0, -4) + "-1.png";
     paragraphs.forEach((p) => {
       p.style.display = "none";
     });
   }
 
-  function hideImg(img: HTMLImageElement, paragraphs: NodeListOf<Element>) {
+  function hideImg(
+    img: HTMLImageElement,
+    paragraphs: NodeListOf<HTMLParagraphElement>
+  ) {
     img.src = img.src.slice(0, -6) + ".png";
-    box.querySelectorAll("p").forEach((p) => {
+    paragraphs.forEach((p) => {
       p.style.display = "block";
     });
   }
 
   boxes.forEach((box) => {
     const img = box.querySelector("img");
-    const paragraphs = box.querySelectorAll("p:not(.sizes-hit)");
-
-    box.addEventListener("mouseover", () => showImg(img, paragraphs));
-    box.addEventListener("mouseout", () => hideImg(img, paragraphs));
+    const paragraphs = box.querySelectorAll(
+      "p:not(.sizes-hit)"
+    ) as NodeListOf<HTMLParagraphElement>;
+    if (img) {
+      box.addEventListener("mouseover", () => showImg(img, paragraphs));
+      box.addEventListener("mouseout", () => hideImg(img, paragraphs));
+    }
   });
 };
 
