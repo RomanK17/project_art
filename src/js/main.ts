@@ -5,6 +5,7 @@ import createMaskInputs from "./modules/mask";
 import checkTextInputs from "./modules/checkTextInputs";
 import showMoreCards from "./modules/showMoreCards";
 import createCalc from "./modules/createCalc";
+import filterImages from "./modules/filterImages";
 
 window.addEventListener("DOMContentLoaded", () => {
   modals();
@@ -39,4 +40,6 @@ window.addEventListener("DOMContentLoaded", () => {
     promocodeSelector: ".promocode",
     resultSelector: ".calc-price",
   });
+
+  filterImages();
 });
