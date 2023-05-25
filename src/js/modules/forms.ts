@@ -78,6 +78,11 @@ const createForms = (): void => {
 
       const formData = new FormData(form);
 
+      if (form.classList.contains("img_form")) {
+        const totalPrice = document.querySelector(".calc-price")?.textContent;
+        if (totalPrice) formData.append("totalPrice", totalPrice);
+      }
+
       const formDataObject = Object.fromEntries(formData.entries());
 
       postData(
