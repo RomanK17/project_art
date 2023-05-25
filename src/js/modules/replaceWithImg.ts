@@ -6,6 +6,7 @@ const replaceWithImageOnHover = (boxesSelector: string) => {
     paragraphs: NodeListOf<HTMLParagraphElement>
   ) {
     img.src = img.src.slice(0, -4) + "-1.png";
+    img?.classList.add("animated", "fadeInUp");
     paragraphs.forEach((p) => {
       p.style.display = "none";
     });
