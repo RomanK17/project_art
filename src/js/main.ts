@@ -5,6 +5,7 @@ import createMaskInputs from "./modules/mask";
 import checkTextInputs from "./modules/checkTextInputs";
 import showMoreCards from "./modules/showMoreCards";
 import createCalc from "./modules/createCalc";
+import replaceWithImageOnHover from "./modules/replaceWithImg";
 
 window.addEventListener("DOMContentLoaded", () => {
   modals();
@@ -39,4 +40,6 @@ window.addEventListener("DOMContentLoaded", () => {
     promocodeSelector: ".promocode",
     resultSelector: ".calc-price",
   });
+
+  replaceWithImageOnHover(".sizes-block");
 });
