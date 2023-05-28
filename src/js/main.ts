@@ -44,5 +44,5 @@ window.addEventListener("DOMContentLoaded", () => {
 
   filterImages();
 
-  createAccordion(".accordion-heading", ".accordion-block");
+  createAccordion(".accordion-heading");
 });
