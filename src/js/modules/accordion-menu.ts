@@ -3,8 +3,20 @@ const createAccordion = (triggersSelector: string) => {
     document.querySelectorAll(triggersSelector);
 
   btns.forEach((btn) => {
-    btn.addEventListener("click", function toggleAccordion() {
+    btn.addEventListener("click", function () {
       const content = this.nextElementSibling as HTMLElement;
+
+      btns.forEach((otherBtn) => {
+        if (otherBtn !== this && otherBtn.classList.contains("active-style")) {
+          otherBtn.classList.remove("active-style");
+          const otherContent = otherBtn.nextElementSibling as HTMLElement;
+          if (otherContent) {
+            otherContent.classList.remove("active-content");
+            otherContent.style.maxHeight = "0";
+          }
+        }
+      });
+
       if (content) {
         this.classList.toggle("active-style");
         content.classList.toggle("active-content");
