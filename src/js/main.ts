@@ -6,6 +6,7 @@ import checkTextInputs from "./modules/checkTextInputs";
 import showMoreCards from "./modules/showMoreCards";
 import createCalc from "./modules/createCalc";
 import filterImages from "./modules/filterImages";
+import createAccordion from "./modules/accordion-menu";
 
 window.addEventListener("DOMContentLoaded", () => {
   modals();
@@ -42,4 +43,6 @@ window.addEventListener("DOMContentLoaded", () => {
   });
 
   filterImages();
+
+  createAccordion(".accordion-heading", ".accordion-block");
 });
