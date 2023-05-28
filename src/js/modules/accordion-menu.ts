@@ -4,19 +4,16 @@ const createAccordion = (triggersSelector: string) => {
 
   btns.forEach((btn) => {
     btn.addEventListener("click", function () {
-      const content = this.nextElementSibling as HTMLElement;
-
-      btns.forEach((otherBtn) => {
-        if (otherBtn !== this && otherBtn.classList.contains("active-style")) {
-          otherBtn.classList.remove("active-style");
-          const otherContent = otherBtn.nextElementSibling as HTMLElement;
-          if (otherContent) {
-            otherContent.classList.remove("active-content");
-            otherContent.style.maxHeight = "0";
-          }
+      btns.forEach((btn) => {
+        btn.classList.remove("active-style");
+        const btnContent = btn.nextElementSibling as HTMLElement;
+        if (btnContent) {
+          btnContent.classList.remove("active-content");
+          btnContent.style.maxHeight = "0";
         }
       });
 
+      const content = this.nextElementSibling as HTMLElement;
       if (content) {
         this.classList.toggle("active-style");
         content.classList.toggle("active-content");
