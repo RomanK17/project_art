@@ -7,6 +7,7 @@ import showMoreCards from "./modules/showMoreCards";
 import createCalc from "./modules/createCalc";
 import filterImages from "./modules/filterImages";
 import replaceWithImageOnHover from "./modules/replaceWithImg";
+import createBurger from "./modules/burger";
 
 window.addEventListener("DOMContentLoaded", () => {
   modals();
@@ -45,4 +46,6 @@ window.addEventListener("DOMContentLoaded", () => {
   filterImages();
 
   replaceWithImageOnHover(".sizes-block");
+
+  createBurger(".burger-menu", ".burger");
 });
