@@ -4,13 +4,15 @@ const createBurger = (menuSelector: string, triggerSelector: string) => {
   const burgerElement: HTMLButtonElement | null =
     document.querySelector(triggerSelector);
 
+  const breakpoint = 993;
+
   if (menuElement && burgerElement) {
     menuElement.style.display = "none";
 
     burgerElement.addEventListener("click", () => {
       if (
         menuElement.style.display == "none" &&
-        window.screen.availWidth < 993
+        window.screen.availWidth < breakpoint
       ) {
         menuElement.style.display = "block";
       } else {
@@ -19,7 +21,8 @@ const createBurger = (menuSelector: string, triggerSelector: string) => {
     });
 
     window.addEventListener("resize", () => {
-      if (window.screen.availWidth > 992) menuElement.style.display = "none";
+      if (window.screen.availWidth > breakpoint)
+        menuElement.style.display = "none";
     });
   }
 };
