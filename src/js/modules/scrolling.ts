@@ -16,54 +16,59 @@ const createSmoothScroll = (UpSelector: string) => {
 
     const calcScroll = () => {
       upElement.addEventListener("click", function (event: Event) {
-        let scrollTop = Math.round(body.scrollTop || element.scrollTop);
-
-        if (this.hash !== "") {
+        let scrollTop = Math.round(body.scrollTop || element.scrollTop); // насколько вниз проскролил пользователь от элементов
+        const hash = this.getAttribute("href");
+        if (!hash) return;
+        if (hash !== "") {
           event.preventDefault();
-          let hashElement = document.querySelector(this.hash);
-          let hashElementTop = 0;
+          let hashElement: HTMLElement | null = document.querySelector(hash); // это header
+          if (hashElement) {
+            let hashElementTop = 0;
+            //вычисляем отступ от верхней границы всей страницы до верхней граница hashElement(header)
+            while (hashElement?.offsetParent) {
+              // возвращает ссылку на ближайший элемент со значением position - для headder это body
+              hashElementTop += hashElement.offsetTop; // расстояние от родительского элемента до текущего
+              hashElement = hashElement.offsetParent as HTMLElement; // hashElement = родительскому, далее родительский hashElement = новому родительскому и так далее до body
+            }
 
-          while (hashElement.offsetParent) {
-            // возвращает ссылку на ближайший элемент со значением position
-            hashElementTop += hashElement.offsetTop; // расстояние от родительского элемента до текущего
-            hashElement = hashElement.offsetParent;
+            hashElementTop = Math.round(hashElementTop); // =0
+
+            smoothScroll(scrollTop, hashElementTop, hash); //this.hash - #up - точка, до куда надо подняться
           }
-
-          hashElementTop = Math.round(hashElementTop);
-          smoothScroll(scrollTop, hashElementTop, this.hash);
         }
       });
     };
 
-    const smoothScroll = (from, to, hash) => {
+    const smoothScroll = (from: number, to: number, hash: string) => {
       let timeInterval = 1;
-      let prevScrollTop;
-      let speed;
+      let prevScrollTop: number;
+      let scrollSpeed: number;
 
       if (to > from) {
-        speed = 30;
+        scrollSpeed = 30;
       } else {
-        speed = -30;
+        scrollSpeed = -30;
       }
 
       let move = setInterval(function () {
-        let scrollTop = Math.round(body.scrollTop || element.scrollTop); //при запуске calcScroll один раз расчитывается значение,тут надо динамически рассчитвать
+        let scrollTop = Math.round(body.scrollTop || element.scrollTop); //расстояние до конца страницы, при запуске calcScroll один раз расчитывается значение,тут надо динамически рассчитвать
+        //определяем, в какую сторону двигаться
 
         if (
           prevScrollTop === scrollTop ||
-          (to > from && scrollTop >= to) ||
-          (to < from && scrollTop <= to)
+          (to > from && scrollTop >= to) || // когда навправление скролла сверху вниз
+          (to < from && scrollTop <= to) // когда навправление скролла снизу вверх
         ) {
           clearInterval(move);
           history.replaceState(
             history.state,
             document.title,
-            location.href.replace(/#.*$/g, "") + hash
+            location.href.replace(/#.*$/g, "") + hash //url, содержащий hash, заменяется на новый hash
           ); // hash получаем из this.hash
         } else {
-          body.srollTop += speed;
-          element.scrollTop += speed;
-          prevScrollTop = scrollTop; //prevScrollTop будет каждый раз перезаписываться в отличие от from
+          body.scrollTop += scrollSpeed;
+          element.scrollTop += scrollSpeed;
+          prevScrollTop = scrollTop; //prevScrollTop будет каждый раз перезаписываться
         }
       }, timeInterval);
     };
