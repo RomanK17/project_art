@@ -7,6 +7,7 @@ import showMoreCards from "./modules/showMoreCards";
 import createCalc from "./modules/createCalc";
 import filterImages from "./modules/filterImages";
 import replaceWithImageOnHover from "./modules/replaceWithImg";
+import createAccordion from "./modules/accordion-menu";
 
 window.addEventListener("DOMContentLoaded", () => {
   modals();
@@ -45,4 +46,6 @@ window.addEventListener("DOMContentLoaded", () => {
   filterImages();
 
   replaceWithImageOnHover(".sizes-block");
+
+  createAccordion(".accordion-heading");
 });
