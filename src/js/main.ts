@@ -8,6 +8,7 @@ import createCalc from "./modules/createCalc";
 import filterImages from "./modules/filterImages";
 import replaceWithImageOnHover from "./modules/replaceWithImg";
 import createAccordion from "./modules/accordion-menu";
+import createSmoothScroll from "./modules/scrolling";
 
 window.addEventListener("DOMContentLoaded", () => {
   modals();
@@ -48,4 +49,6 @@ window.addEventListener("DOMContentLoaded", () => {
   replaceWithImageOnHover(".sizes-block");
 
   createAccordion(".accordion-heading");
+
+  createSmoothScroll(".pageup");
 });
