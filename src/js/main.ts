@@ -9,6 +9,7 @@ import filterImages from "./modules/filterImages";
 import replaceWithImageOnHover from "./modules/replaceWithImg";
 import createAccordion from "./modules/accordion-menu";
 import createBurger from "./modules/burger";
+import createSmoothScroll from "./modules/scrolling";
 
 window.addEventListener("DOMContentLoaded", () => {
   modals();
@@ -51,4 +52,6 @@ window.addEventListener("DOMContentLoaded", () => {
   createAccordion(".accordion-heading");
 
   createBurger(".burger-menu", ".burger");
+
+  createSmoothScroll(".pageup");
 });
