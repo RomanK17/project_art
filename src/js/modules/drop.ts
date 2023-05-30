@@ -1,5 +1,6 @@
 const createDrop = () => {
-  const fileInputs = document.querySelectorAll('[name = "upload"]');
+  const fileInputs: NodeListOf<HTMLInputElement> =
+    document.querySelectorAll('[name = "upload"]');
   // dragenter - объект над dropArea
   // dragleave - объект за пределами dropArea
   // dragover - объект зависает над dropArea
@@ -15,14 +16,20 @@ const createDrop = () => {
     event.stopPropagation(); // останавливает всплытия(bobbling)
   }
 
-  function highlight(selector: HTMLElement) {
-    selector.closest(".file_upload").style.border = "5px solid yellow";
-    selector.closest(".file_upload").style.backgroundColor = "rgba(0,0,0, .7)";
+  function highlight(input: HTMLInputElement) {
+    const fileUpload: HTMLElement | null = input.closest(".file_upload");
+    if (fileUpload) {
+      fileUpload.style.border = "5px solid yellow";
+      fileUpload.style.backgroundColor = "rgba(0,0,0, .7)";
+    }
   }
 
-  function unhighlight(selector: HTMLElement) {
-    selector.closest(".file_upload").style.border = "none";
-    selector.closest(".file_upload").style.backgroundColor = "#ededed";
+  function unhighlight(input: HTMLInputElement) {
+    const fileUpload: HTMLElement | null = input.closest(".file_upload");
+    if (fileUpload) {
+      fileUpload.style.border = "none";
+      fileUpload.style.backgroundColor = "#ededed";
+    }
   }
 
   ["dragenter", "dragover"].forEach((eventName) => {
@@ -43,8 +50,10 @@ const createDrop = () => {
 
   fileInputs.forEach((input) => {
     input.addEventListener("drop", (event) => {
-      input.files = event.dataTransfer.files; //input.files - файлы, которые загрузил пользователь
-      //event.dataTransfer.files - объект с файлом
+      if (event.dataTransfer) {
+        input.files = event.dataTransfer.files; //input.files - файлы, которые загрузил пользователь
+        //event.dataTransfer.files - объект с файлом
+      }
     });
   });
 };
