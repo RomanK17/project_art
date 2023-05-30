@@ -10,6 +10,7 @@ import replaceWithImageOnHover from "./modules/replaceWithImg";
 import createAccordion from "./modules/accordion-menu";
 import createBurger from "./modules/burger";
 import createSmoothScroll from "./modules/scrolling";
+import createDrop from "./modules/drop";
 
 window.addEventListener("DOMContentLoaded", () => {
   modals();
@@ -54,4 +55,6 @@ window.addEventListener("DOMContentLoaded", () => {
   createBurger(".burger-menu", ".burger");
 
   createSmoothScroll(".pageup");
+
+  createDrop();
 });
