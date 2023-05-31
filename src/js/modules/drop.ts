@@ -15,7 +15,7 @@ const createDrop = () => {
   function highlight(input: HTMLInputElement) {
     const fileUpload: HTMLElement | null = input.closest(".file_upload");
     if (fileUpload) {
-      fileUpload.style.border = "5px solid yellow";
+      fileUpload.style.border = "3px solid yellow";
       fileUpload.style.backgroundColor = "rgba(0,0,0, .7)";
     }
   }
@@ -23,7 +23,7 @@ const createDrop = () => {
   function unhighlight(input: HTMLInputElement) {
     const fileUpload: HTMLElement | null = input.closest(".file_upload");
     if (fileUpload) {
-      fileUpload.style.border = "none";
+      fileUpload.style.border = "3px solid transparent";
       if (input.closest(".img_form")) {
         fileUpload.style.backgroundColor = "#ffffff";
       } else {
