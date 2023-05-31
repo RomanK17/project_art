@@ -1,17 +1,13 @@
 const createDrop = () => {
   const fileInputs: NodeListOf<HTMLInputElement> =
     document.querySelectorAll('[name = "upload"]');
-  // dragenter - объект над dropArea
-  // dragleave - объект за пределами dropArea
-  // dragover - объект зависает над dropArea
-  // drop - объект отправлен в dropArea
   ["dragenter", "dragleave", "dragover", "drop"].forEach((eventName) => {
     fileInputs.forEach((fileInput) => {
-      fileInput.addEventListener(eventName, preventDefaults, false);
+      fileInput.addEventListener(eventName, handleEvent, false);
     });
   });
 
-  function preventDefaults(event: Event) {
+  function handleEvent(event: Event) {
     event.preventDefault();
     event.stopPropagation(); // останавливает всплытия(bobbling)
   }
@@ -28,7 +24,11 @@ const createDrop = () => {
     const fileUpload: HTMLElement | null = input.closest(".file_upload");
     if (fileUpload) {
       fileUpload.style.border = "none";
-      fileUpload.style.backgroundColor = "#ededed";
+      if (input.closest(".img_form")) {
+        fileUpload.style.backgroundColor = "#ffffff";
+      } else {
+        fileUpload.style.backgroundColor = "#ededed";
+      }
     }
   }
 
@@ -53,6 +53,19 @@ const createDrop = () => {
       if (event.dataTransfer) {
         input.files = event.dataTransfer.files; //input.files - файлы, которые загрузил пользователь
         //event.dataTransfer.files - объект с файлом
+
+        const imgFullName = input.files[0].name.split(".");
+        let truncatedName = imgFullName[0].substring(0, 6);
+
+        if (truncatedName.length === 6) {
+          truncatedName += "..";
+        }
+
+        imgFullName[0] = `${truncatedName}.${imgFullName.pop()}`;
+
+        if (input && input.previousElementSibling) {
+          input.previousElementSibling.textContent = imgFullName.join(".");
+        }
       }
     });
   });
